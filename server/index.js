@@ -1,11 +1,19 @@
 import express from "express";
 import { getJson } from "serpapi";
 import { getTextSearchResults } from "./controller/textData.js";
-import dotenv from "dotenv";
 import { getImageSearchResults } from "./controller/imageData.js";
-dotenv.config();
+import dotenv from "dotenv";
+import cors from "cors";
 
 const app = express();
+dotenv.config();
+
+app.use(cors(
+  {
+    origin: '*'
+  }
+));
+
 const PORT = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
