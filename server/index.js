@@ -1,16 +1,32 @@
-const { getJson } = require("serpapi");
+import express from "express";
+import { getJson } from "serpapi";
+import { getTextSearchResults } from "./controller/textData.js";
+import dotenv from "dotenv";
+import { getImageSearchResults } from "./controller/imageData.js";
+dotenv.config();
 
-getJson({
-  engine: "google",
-  q: "Fresh Bagels",
-//   location: "Seattle-Tacoma, WA, Washington, United States",
-  hl: "en",
-  gl: "us",
-  google_domain: "google.com",
-  num: "10",
-  start: "10",
-  safe: "active",
-  api_key: "683d60e39fae6a8e72b87c9d173d5792c574ac685b516ffe8e0a9c768146bf68"
-}, (json) => {
-  console.log(json["organic_results"]);
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+app.get("/search", async (req, res) => {
+  const query = req.query.q;
+  console.log(query);
+
+  try {
+    const textData = await getTextSearchResults(query);
+    // res.send(textData);
+    const imageData = await getImageSearchResults(query);
+    res.send(imageData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Example app listening at http://localhost:${PORT}`);
 });
