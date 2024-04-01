@@ -1,30 +1,41 @@
 import React, { useEffect, useState } from "react";
 import ApiConfig from "../utils/ApiConfig";
 import { Link } from "react-router-dom";
+import Loader from "../components/Loader";
+import { useNavigate } from "react-router-dom";
+import {useSelector, useDispatch} from "react-redux";
 
 const Search = () => {
-    
     const [search, setSearch] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    // const [loading, setLoading] = useState(false);
+    // const [error, setError] = useState(null);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const {textData, imageData, loading, error} = useSelector((state) => state.customerReducer);
     
     
     const handleSearch = async (event) => {
         event.preventDefault();
         console.log("function called")
         try {
-            setLoading(true);
-            // const response = await fetch(ApiConfig.searchapi + `?q=${search}`);
+            dispatch({type: 'SET_LOADING', payload: true});
+            const response = await fetch(ApiConfig.searchapi + `?q=${search}`);
             const data = await response.json();
-            console.log(data);
+            dispatch({type: 'SET_TEXT_DATA', payload: data.textData});
+            dispatch({type: 'SET_IMAGE_DATA', payload: data.imageData});
+            // console.log(data);
+            console.log(textData)
+            console.log(imageData)
+            // navigate('/search');
             // console.log(search);
-            setSearchResults(data.data);
         } catch (error) {
-            setError(error);
+            // dispatch({type: 'SET_ERROR', payload: error});
+            console.log(error);
         } finally {
-            setLoading(false);
-            
+            dispatch({type: 'SET_LOADING', payload: false});            
         }
     };
 
@@ -34,6 +45,10 @@ const Search = () => {
         console.log(search)
     }
 
+
+    if(loading) {
+        return <Loader/>
+    }
 
 
     return (

@@ -26,9 +26,11 @@ app.get("/search", async (req, res) => {
 
   try {
     const textData = await getTextSearchResults(query);
-    // res.send(textData);
     const imageData = await getImageSearchResults(query);
-    res.send(imageData);
+    res.send({
+      textData,
+      imageData,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

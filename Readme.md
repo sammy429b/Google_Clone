@@ -4,13 +4,13 @@
 git clone https://github.com/sammy429b/You_Search.git
 ```
 
-## Navigate to the project directory:
+### Navigate to the client directory:
 
 ```bash
 cd You_Search\client
 ```
 
-## Install dependencies:
+### Install dependencies:
 
 ```bash
 npm install
@@ -20,7 +20,7 @@ or
 yarn install
 ```
 
-## Start the development server:
+### Start the development server:
 
 ```bash
 npm run dev
@@ -31,7 +31,7 @@ or
 yarn run dev
 ```
 
-## Open the app in your browser:
+### Open the app in your browser:
 ```bash
 http://localhost:5173/
 ```
@@ -47,7 +47,7 @@ PORT = 3000
 SERPAPI_API_KEY = "Enter_Your_API_Key"
 ```
 
-## Running the Server
+### Running the Server
 To run the Express server, follow these steps:
 1. Open a command line or terminal window.
 2. Navigate to the project directory if you haven't already done so.
