@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ApiConfig from "../utils/ApiConfig";
+import { Link } from "react-router-dom";
 
 const Search = () => {
     
@@ -14,9 +15,10 @@ const Search = () => {
         console.log("function called")
         try {
             setLoading(true);
-            const response = await fetch(ApiConfig.searchapi + `?q=${search}`);
+            // const response = await fetch(ApiConfig.searchapi + `?q=${search}`);
             const data = await response.json();
             console.log(data);
+            // console.log(search);
             setSearchResults(data.data);
         } catch (error) {
             setError(error);
@@ -42,7 +44,7 @@ const Search = () => {
                     <a className="block p-3">Store</a>
                 </div>
                 <div className="flex items-center">
-                    <a className="block p-3">Gmail</a>
+                    <a href="https://mail.google.com/mail/u/0/#inbox" className="block p-3">Gmail</a>
                     <a className="block p-3">Images</a>
                     <img
                         className="w-20 rounded-full block py-3 px-4"
