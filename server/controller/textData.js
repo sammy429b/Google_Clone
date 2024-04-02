@@ -13,7 +13,7 @@ export const getTextSearchResults = async (query) => {
       hl: "en",
       gl: "us",
       google_domain: "google.com",
-      num: "10",
+      num: "20",
       start: "10",
       safe: "active",
       api_key: api_key,

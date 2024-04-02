@@ -16,10 +16,10 @@ const initialState = {
 const reducer = createReducer(initialState, (builder) => {
     builder.
     addCase(SET_TEXT_DATA, (state, action) => {
-        state.textData = [...state.textData, ...action.payload];
+        state.textData = [...action.payload];
     })
     .addCase(SET_IMAGE_DATA, (state, action) => {
-        state.imageData = [...state.imageData, ...action.payload];
+        state.imageData = [...action.payload];
     })
     .addCase(SET_LOADING, (state, action) => {
         state.loading = action.payload;

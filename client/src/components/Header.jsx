@@ -1,14 +1,45 @@
 import { useNavigate } from "react-router-dom";
 import { MicrophoneIcon, SearchIcon, XIcon } from "@heroicons/react/solid";
-// import Avatar from "./Avatar";
+import { useSelector, useDispatch} from "react-redux";
 import HeaderOptions from "./HeaderOptions";
 import { useState } from "react";
+import ApiConfig from "../utils/ApiConfig";
 
 
 
 const Header = ({ selected }) => {
   const navigate = useNavigate();
-  const [text, setText] = useState("");
+  const [search, setSearch] = useState("");
+
+  const {textData, imageData, loading, error} = useSelector((state) => state.customerReducer);
+  const dispatch = useDispatch();
+    
+    const handleSearch = async (event) => {
+        event.preventDefault();
+        console.log("function called")
+        try {
+            dispatch({type: 'SET_LOADING', payload: true});
+            const response = await fetch(ApiConfig.searchapi + `?q=${search}`);
+            const data = await response.json();
+            dispatch({type: 'SET_TEXT_DATA', payload: data.textData});
+            dispatch({type: 'SET_IMAGE_DATA', payload: data.imageData});
+            // console.log(data);
+            console.log(textData)
+            console.log(imageData)
+            // console.log(search);
+        } catch (error) {
+            // dispatch({type: 'SET_ERROR', payload: error});
+            console.log(error);
+        } finally {
+            dispatch({type: 'SET_LOADING', payload: false});            
+        }
+    };
+
+   
+    const handleSearchChange = (event) => {
+        setSearch(event.target.value);
+        console.log(search)
+    }
 
   return (
     <>
@@ -21,19 +52,17 @@ const Header = ({ selected }) => {
           className="cursor-pointer"
           onClick={() => navigate("/")}
         />
-        <form className="flex flex-grow px-6 py-3 ml-10 mr-5 border border-gray-200 rounded-full shadow-lg max-w-3xl items-center">
+        <form className="flex flex-grow px-6 py-3 ml-10 mr-5 border border-gray-200 rounded-full shadow-lg max-w-3xl items-center" onSubmit={handleSearch}>
           <input
             type="text"
-            value={text}
+            value={search}
             placeholder="Search Google"
             className="flex-grow w-full focus:outline-none"
-            onChange={(e) =>
-              setText(e.target.value)
-            }
+            onChange={handleSearchChange}
           />
           <XIcon
             className="h-7 sm:mr-3 text-gray-500 cursor-pointer transition duration-100 transform hover:scale-125"
-            onClick={() => setText("")}
+            onClick={() => setSearch("")}
           />
           <MicrophoneIcon className="h-6 mr-3 hidden sm:inline-flex text-blue-500 border-l-2 pl-4 border-gray-300" />
           <SearchIcon className="h-6 text-blue-500 hidden sm:inline-flex cursor-pointer" />
