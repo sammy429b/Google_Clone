@@ -29,7 +29,7 @@ const Search = () => {
             // console.log(data);
             console.log(textData)
             console.log(imageData)
-            // navigate('/search');
+            navigate('/search');
             // console.log(search);
         } catch (error) {
             // dispatch({type: 'SET_ERROR', payload: error});

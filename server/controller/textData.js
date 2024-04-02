@@ -9,7 +9,7 @@ export const getTextSearchResults = async (query) => {
     const result = await getJson({
       engine: "google",
       q: `${query}`,
-      location: "india",
+      location: "Maharashtra, India",
       hl: "en",
       gl: "us",
       google_domain: "google.com",
