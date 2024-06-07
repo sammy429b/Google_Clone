@@ -12,7 +12,8 @@ dotenv.config();
 app.use(cors(
   {
     // origin: '*'
-    origin: 'https://google-clone-frontend-kappa.vercel.app/'
+    origin: 'https://google-clone-frontend-kappa.vercel.app/',
+    optionsSuccessStatus: 200
   }
 ));
 
