@@ -9,13 +9,7 @@ import { getVideoSearchResults } from "./controller/videoData.js";
 const app = express();
 dotenv.config();
 
-app.use(cors(
-  {
-    // origin: '*'
-    origin: 'https://google-clone-frontend-kappa.vercel.app/',
-    optionsSuccessStatus: 200
-  }
-));
+app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
