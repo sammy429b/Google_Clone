@@ -3,51 +3,54 @@ import ApiConfig from "../utils/ApiConfig";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
-import {useSelector, useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const Search = () => {
     const [search, setSearch] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     // const [error, setError] = useState(null);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const {textData, imageData, loading, error} = useSelector((state) => state.customerReducer);
-    
-    
-    const handleSearch = async (event) => {
-        event.preventDefault();
-        console.log("function called")
-        try {
-            dispatch({type: 'SET_LOADING', payload: true});
-            const response = await fetch(ApiConfig.searchapi + `?q=${search}`);
-            const data = await response.json();
-            dispatch({type: 'SET_TEXT_DATA', payload: data.textData});
-            dispatch({type: 'SET_IMAGE_DATA', payload: data.imageData});
-            // console.log(data);
-            console.log(textData)
-            console.log(imageData)
-            navigate('/search');
-            // console.log(search);
-        } catch (error) {
-            // dispatch({type: 'SET_ERROR', payload: error});
-            console.log(error);
-        } finally {
-            dispatch({type: 'SET_LOADING', payload: false});            
-        }
-    };
+    const { textData, imageData, error } = useSelector((state) => state.customerReducer);
 
-   
+
     const handleSearchChange = (event) => {
         setSearch(event.target.value);
         console.log(search)
     }
 
 
-    if(loading) {
-        return <Loader/>
+
+    const handleSearch = async (event) => {
+        event.preventDefault();
+        console.log("function called")
+        try {
+            setLoading(true)
+            const response = await fetch(ApiConfig.searchapi + `?q=${search}`);
+            const data = await response.json();
+            dispatch({ type: 'SET_TEXT_DATA', payload: data.textData });
+            dispatch({ type: 'SET_IMAGE_DATA', payload: data.imageData });
+            // dispatch({type: 'SET_VIDEO_DATA', payload: data.videoData});
+            // console.log(data);
+            console.log(textData)
+            console.log(imageData)
+            // console.log(videoData)
+            navigate('/search');
+            // console.log(search);
+            setLoading(false)
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
+        }
+    };
+
+
+    if (loading) {
+        return <Loader />
     }
 
 
@@ -84,7 +87,7 @@ const Search = () => {
                             Google Search
                         </button>
                         <button className="bg-gray-200 border border-gray-300 py-3 px-4 rounded hover:bg-gray-400 hover:border-gray-500"
-                            
+
                         >
                             I'm Feeling Lucky
                         </button>

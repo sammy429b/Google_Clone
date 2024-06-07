@@ -4,6 +4,7 @@ import { getTextSearchResults } from "./controller/textData.js";
 import { getImageSearchResults } from "./controller/imageData.js";
 import dotenv from "dotenv";
 import cors from "cors";
+import { getVideoSearchResults } from "./controller/videoData.js";
 
 const app = express();
 dotenv.config();
@@ -27,9 +28,11 @@ app.get("/search", async (req, res) => {
   try {
     const textData = await getTextSearchResults(query);
     const imageData = await getImageSearchResults(query);
+    const videoData = await getVideoSearchResults(query);
     res.send({
       textData,
       imageData,
+      videoData
     });
   } catch (error) {
     console.error(error);
