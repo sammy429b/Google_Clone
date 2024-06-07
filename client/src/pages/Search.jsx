@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 const Search = () => {
     const [search, setSearch] = useState("");
@@ -29,8 +30,9 @@ const Search = () => {
         console.log("function called")
         try {
             setLoading(true)
-            const response = await fetch(ApiConfig.searchapi + `?q=${search}`);
-            const data = await response.json();
+            const response = await axios.get(`${ApiConfig.searchapi}` + `?q=${search}`);
+            const data = response.data;
+            console.log(data)
             dispatch({ type: 'SET_TEXT_DATA', payload: data.textData });
             dispatch({ type: 'SET_IMAGE_DATA', payload: data.imageData });
             // dispatch({type: 'SET_VIDEO_DATA', payload: data.videoData});

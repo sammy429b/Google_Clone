@@ -11,8 +11,8 @@ dotenv.config();
 
 app.use(cors(
   {
-    origin: '*'
-    // origin: 'https://goooggle.vercel.app/'
+    // origin: '*'
+    origin: 'https://google-clone-frontend-kappa.vercel.app/'
   }
 ));
 
