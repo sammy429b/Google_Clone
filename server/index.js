@@ -11,7 +11,8 @@ dotenv.config();
 
 app.use(cors(
   {
-    origin: 'https://goooggle.vercel.app/'
+    origin: '*'
+    // origin: 'https://goooggle.vercel.app/'
   }
 ));
 
@@ -29,7 +30,7 @@ app.get("/search", async (req, res) => {
     const textData = await getTextSearchResults(query);
     const imageData = await getImageSearchResults(query);
     const videoData = await getVideoSearchResults(query);
-    res.send({
+    res.json({
       textData,
       imageData,
       videoData

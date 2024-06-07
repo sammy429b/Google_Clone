@@ -13,11 +13,9 @@ export const getVideoSearchResults = async (query) => {
             gl: "us",
             api_key: api_key,
         });
-        const data = result.images_results;
-        // console.log("data",data)
+        const data = result.video_results;
         return data;
     } catch (error) {
-        // console.log(error);
         throw new Error(error);
     }
 };
